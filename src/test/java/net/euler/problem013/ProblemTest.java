@@ -8,6 +8,6 @@ public class ProblemTest {
 
 	@Test
 	public void test() {
-		assertEquals(Problem.sum(), 0);
+		assertEquals(Problem.sum(), "5537376230");
 	}
 }
