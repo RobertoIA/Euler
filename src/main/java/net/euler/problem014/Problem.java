@@ -22,37 +22,40 @@ import java.util.List;
  * Which starting number, under one million, produces the longest chain?
  */
 public class Problem {
+	
+	static final int MAX_STARTING_NUMBER = 1000000;
+	
 	public static void main(String[] args) {
-		int max = 1000000;
+		int max = 10;
 		int length = 0;
 		List<Integer> candidates = new ArrayList<>();
 		List<Integer> selected = new ArrayList<>();
 
-		for (int i = 1; i < 1000000; i++) {
+		for (int i = 1; i < MAX_STARTING_NUMBER; i++) {
 			candidates.add(i);
 		}
-		
+
 		while (candidates.size() > 1) {
 			for (int candidate : candidates) {
 				length = sequenceLength(candidate, max);
-				if(length == max)
+				if (length == max)
 					selected.add(candidate);
 			}
 			candidates = selected;
 			selected = new ArrayList<>();
-			
-			System.out.println("max: " + max);
-			System.out.println("candidates: " + candidates.size());
-			System.out.println();
-			
-			max += 1000000;
+
+			if (max % 10 == 0)
+				System.out.println("more than " + max + " terms: "
+						+ candidates.size() + " candidates.");
+
+			max++;
 		}
-		
-		System.out.println("Winner: " + candidates.get(0) + ", length " + length);
-		System.out.println("OK");
+
+		System.out.println("maximum length: " + candidates.get(0) + " as starting number.");
+		System.out.println(sequenceLength(candidates.get(0), 10000000));
 	}
 
-	static int sequenceLength(int n, int max) {
+	static int sequenceLength(long n, int max) {
 		int length = 1;
 
 		while (n != 1) {

@@ -8,6 +8,7 @@ public class ProblemTest {
 
 	@Test
 	public void testSequenceLenght() {
-		assertEquals(Problem.sequenceLength(13, 100), 10);
+		assertEquals(10, Problem.sequenceLength(13, 100));
+		assertEquals(525, Problem.sequenceLength(837799, 550));
 	}
 }
