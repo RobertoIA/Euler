@@ -1,6 +1,5 @@
 package net.euler.problem015;
 
-import java.util.BitSet;
 
 /**
  * Starting in the top left corner of a 2×2 grid, and only being able to move to
@@ -9,40 +8,25 @@ import java.util.BitSet;
  * How many such routes are there through a 20×20 grid?
  */
 public class Problem {
-
-	static int count = 0;
-
 	public static void main(String[] args) {
-		System.out.println(routes(2));
-		System.out.println(routes(20));
-		System.out.println("OK");
+		System.out.println(calculatePaths(20));
 	}
 
-	static long routes(int gridSize) {
-		count = 0;
-		permutation(new BitSet(gridSize * 2), 0, gridSize * 2);
-		return count;
-	}
+	static long calculatePaths(int gridSize) {
+		long[][] grid = new long[gridSize + 1][gridSize + 1];
+		long right, down;
 
-	private static void permutation(BitSet permutationPartial, int filled,
-			int total) {
-		BitSet permutation = (BitSet) permutationPartial.clone();
-		
-		int sum = 0;
-		for (int i = 0; i < permutation.length(); i++)
-			if (permutation.get(i))
-				sum++;
-		
-		if(sum > total / 2) return;
-		
-		if (filled == total) {
-			if (sum == total / 2)
-				count++;
-			return;
+		for (int i = 0; i <= gridSize; i++)
+			grid[gridSize][i] = grid[i][gridSize] = 1;
+
+		for (int i = 1; i <= gridSize; i++) {
+			for(int j = 1; j <= gridSize; j++) {
+				right = grid[gridSize - i + 1][gridSize - j];
+				down = grid[gridSize - i][gridSize - j + 1];
+				grid[gridSize - i][gridSize - j] = right + down;
+			}
 		}
-		permutation.set(filled, false);
-		permutation(permutation, filled + 1, total);
-		permutation.set(filled, true);
-		permutation(permutation, filled + 1, total);
+
+		return grid[0][0];
 	}
 }
