@@ -1,0 +1,26 @@
+package net.euler.problem016;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class ProblemTest {
+
+	@Test
+	public void sumPow() {
+		assertEquals(26, Problem.sumPow(2, 15));
+		assertEquals(1366, Problem.sumPow(2, 1000));
+	}
+
+	@Test
+	public void testPowOfTwo() {
+		assertEquals("32768", Problem.powOfTwo(15));
+		assertEquals("10715086071862673209484250490600018105614048117055336074"
+				+ "43750388370351051124936122493198378815695858127594672917553"
+				+ "14682518714528569231404359845775746985748039345677748242309"
+				+ "85421074605062371141877954182153046474983581941267398767559"
+				+ "16554394607706291457119647768654216766042983165262438683720"
+				+ "5668069376", Problem.powOfTwo(1000));
+	}
+
+}
