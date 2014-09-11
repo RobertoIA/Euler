@@ -25,28 +25,41 @@ package net.euler.problem018;
 public class Problem {
 
 	public static void main(String[] args) {
-		int[] triangle = { 3, 7, 4, 2, 4, 6, 8, 5, 9, 3 };
-		System.out.println("\n" + getMaximumValue(triangle));
+		int[] triangle = { 75 ,95 ,64 ,17 ,47 ,82 ,18 ,35 ,87 ,10 ,20 ,04 ,82 ,47 ,65 ,19 ,01 ,23 ,75 ,03 ,34 ,88 ,02 ,77 ,73 ,07 ,63 ,67 ,99 ,65 ,04 ,28 ,06 ,16 ,70 ,92 ,41 ,41 ,26 ,56 ,83 ,40 ,80 ,70 ,33 ,41 ,48 ,72 ,33 ,47 ,32 ,37 ,16 ,94 ,29 ,53 ,71 ,44 ,65 ,25 ,43 ,91 ,52 ,97 ,51 ,14 ,70 ,11 ,33 ,28 ,77 ,73 ,17 ,78 ,39 ,68 ,17 ,57 ,91 ,71 ,52 ,38 ,17 ,14 ,91 ,43 ,58 ,50 ,27 ,29 ,48 ,63 ,66 ,04 ,68 ,89 ,53 ,67 ,30 ,73 ,16 ,69 ,87 ,40 ,31 ,04 ,62 ,98 ,27 ,23 ,9 ,70 ,98 ,73 ,93 ,38 ,53 ,60 ,04 ,23 };
+		System.out.println(getMaximumValue(triangle));
 	}
 
 	static int getMaximumValue(int[] values) {
 		int level = 1;
 		int index = 0;
+		int[] preLevel = null, currLevel;
+		int maxPrev;
 
-		// for(int prev = index - (level - 1); prev < index; prev++) {
 		do {
-			System.out.print(level + ":");
+			currLevel = new int[level];
 			for (int i = index; i < index + level; i++) {
-				if (i > index && i < index + level - 1)
-					System.out.print(" " + values[i]);
-				else
-					System.out.print(" " + values[i]);
+				if (preLevel != null) {
+					if (i > index && i < index + level - 1) {
+						maxPrev = Math.max(preLevel[i - index - 1], preLevel[i
+								- index]);
+					} else if (i > index){
+						maxPrev = preLevel[i - index - 1];
+					} else {
+						maxPrev = preLevel[i - index];
+					}
+					currLevel[i - index] = values[i] + maxPrev;
+				} else {
+					currLevel[i - index] = values[i];
+				}
 			}
-			index += level;
-			level++;
-			System.out.println();
+			preLevel = currLevel;
+			index += level++;
 		} while (index < values.length);
+		
+		int max = Integer.MIN_VALUE;
+		for(int value : currLevel)
+			if(value > max) max = value;
 
-		return 0;
+		return max;
 	}
 }
