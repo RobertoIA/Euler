@@ -23,15 +23,16 @@ public class Problem {
 
 	public static void main(String[] args) {
 		Problem problem = new Problem();
-		System.out.println(problem.countFirstSundays(1900, 2000));
+		System.out.println(problem.countFirstSundays(1901, 2000));
 	}
 
 	int countFirstSundays(int firstYear, int lastYear) {
-		Month currMonth = new Month(Months.JANUARY, Weekdays.MONDAY, firstYear);
+		Month currMonth = new Month(Months.JANUARY, Weekdays.TUESDAY, firstYear);
 		int count = 0;
-		
+
 		while (currMonth.year <= lastYear) {
-			if(currMonth.isSundayFirst()) count++;
+			if (currMonth.isSundayFirst())
+				count++;
 			currMonth = currMonth.getNextMonth();
 		}
 
@@ -51,11 +52,71 @@ public class Problem {
 		}
 
 		Month getNextMonth() {
-			return this;
+			Months month;
+			int days;
+			switch (this.month) {
+			case JANUARY:
+				month = Months.FEBRUARY;
+				days = 31;
+				break;
+			case FEBRUARY:
+				month = Months.MARCH;
+				days = isLeapYear(this.year) ? 29 : 28;
+				break;
+			case MARCH:
+				month = Months.APRIL;
+				days = 31;
+				break;
+			case APRIL:
+				month = Months.MAY;
+				days = 30;
+				break;
+			case MAY:
+				month = Months.JUNE;
+				days = 31;
+				break;
+			case JUNE:
+				month = Months.JULY;
+				days = 30;
+				break;
+			case JULY:
+				month = Months.AUGUST;
+				days = 31;
+				break;
+			case AUGUST:
+				month = Months.SEPTEMBER;
+				days = 31;
+				break;
+			case SEPTEMBER:
+				month = Months.OCTOBER;
+				days = 30;
+				break;
+			case OCTOBER:
+				month = Months.NOVEMBER;
+				days = 31;
+				break;
+			case NOVEMBER:
+				month = Months.DECEMBER;
+				days = 30;
+				break;
+			case DECEMBER:
+				month = Months.JANUARY;
+				days = 31;
+				break;
+			default:
+				month = null;
+				days = 0;
+			}
+
+			Weekdays firstDay;			
+			firstDay = Weekdays.values()[(this.firstDay.ordinal() + days) % 7];
+
+			int year = month == Months.JANUARY ? this.year + 1 : this.year;
+			return new Month(month, firstDay, year);
 		}
 
 		boolean isSundayFirst() {
-			return false;
+			return firstDay == Weekdays.SUNDAY;
 		}
 
 		private boolean isLeapYear(int year) {
