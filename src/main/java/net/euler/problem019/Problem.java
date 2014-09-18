@@ -1,5 +1,8 @@
 package net.euler.problem019;
 
+import net.euler.problem019.Problem.Months;
+import net.euler.problem019.Problem.Weekdays;
+
 /**
  * You are given the following information, but you may prefer to do some
  * research for yourself.
@@ -22,11 +25,10 @@ public class Problem {
 	}
 
 	public static void main(String[] args) {
-		Problem problem = new Problem();
-		System.out.println(problem.countFirstSundays(1901, 2000));
+		System.out.println(countFirstSundays(1901, 2000));
 	}
 
-	int countFirstSundays(int firstYear, int lastYear) {
+	static int countFirstSundays(int firstYear, int lastYear) {
 		Month currMonth = new Month(Months.JANUARY, Weekdays.TUESDAY, firstYear);
 		int count = 0;
 
@@ -38,95 +40,95 @@ public class Problem {
 
 		return count;
 	}
+}
 
-	class Month {
+class Month {
 
+	Months month;
+	Weekdays firstDay;
+	int year;
+
+	Month(Months month, Weekdays firstDay, int year) {
+		this.month = month;
+		this.firstDay = firstDay;
+		this.year = year;
+	}
+
+	Month getNextMonth() {
 		Months month;
-		Weekdays firstDay;
-		int year;
-
-		Month(Months month, Weekdays firstDay, int year) {
-			this.month = month;
-			this.firstDay = firstDay;
-			this.year = year;
+		int days;
+		switch (this.month) {
+		case JANUARY:
+			month = Months.FEBRUARY;
+			days = 31;
+			break;
+		case FEBRUARY:
+			month = Months.MARCH;
+			days = isLeapYear(this.year) ? 29 : 28;
+			break;
+		case MARCH:
+			month = Months.APRIL;
+			days = 31;
+			break;
+		case APRIL:
+			month = Months.MAY;
+			days = 30;
+			break;
+		case MAY:
+			month = Months.JUNE;
+			days = 31;
+			break;
+		case JUNE:
+			month = Months.JULY;
+			days = 30;
+			break;
+		case JULY:
+			month = Months.AUGUST;
+			days = 31;
+			break;
+		case AUGUST:
+			month = Months.SEPTEMBER;
+			days = 31;
+			break;
+		case SEPTEMBER:
+			month = Months.OCTOBER;
+			days = 30;
+			break;
+		case OCTOBER:
+			month = Months.NOVEMBER;
+			days = 31;
+			break;
+		case NOVEMBER:
+			month = Months.DECEMBER;
+			days = 30;
+			break;
+		case DECEMBER:
+			month = Months.JANUARY;
+			days = 31;
+			break;
+		default:
+			month = null;
+			days = 0;
 		}
 
-		Month getNextMonth() {
-			Months month;
-			int days;
-			switch (this.month) {
-			case JANUARY:
-				month = Months.FEBRUARY;
-				days = 31;
-				break;
-			case FEBRUARY:
-				month = Months.MARCH;
-				days = isLeapYear(this.year) ? 29 : 28;
-				break;
-			case MARCH:
-				month = Months.APRIL;
-				days = 31;
-				break;
-			case APRIL:
-				month = Months.MAY;
-				days = 30;
-				break;
-			case MAY:
-				month = Months.JUNE;
-				days = 31;
-				break;
-			case JUNE:
-				month = Months.JULY;
-				days = 30;
-				break;
-			case JULY:
-				month = Months.AUGUST;
-				days = 31;
-				break;
-			case AUGUST:
-				month = Months.SEPTEMBER;
-				days = 31;
-				break;
-			case SEPTEMBER:
-				month = Months.OCTOBER;
-				days = 30;
-				break;
-			case OCTOBER:
-				month = Months.NOVEMBER;
-				days = 31;
-				break;
-			case NOVEMBER:
-				month = Months.DECEMBER;
-				days = 30;
-				break;
-			case DECEMBER:
-				month = Months.JANUARY;
-				days = 31;
-				break;
-			default:
-				month = null;
-				days = 0;
-			}
+		Weekdays firstDay;			
+		firstDay = Weekdays.values()[(this.firstDay.ordinal() + days) % 7];
 
-			Weekdays firstDay;			
-			firstDay = Weekdays.values()[(this.firstDay.ordinal() + days) % 7];
+		int year = month == Months.JANUARY ? this.year + 1 : this.year;
+		return new Month(month, firstDay, year);
+	}
 
-			int year = month == Months.JANUARY ? this.year + 1 : this.year;
-			return new Month(month, firstDay, year);
-		}
+	boolean isSundayFirst() {
+		return firstDay == Weekdays.SUNDAY;
+	}
 
-		boolean isSundayFirst() {
-			return firstDay == Weekdays.SUNDAY;
-		}
-
-		private boolean isLeapYear(int year) {
-			if (year % 4 != 0)
-				return false;
-			if (year % 100 != 0)
-				return true;
-			if (year % 400 != 0)
-				return false;
+	private boolean isLeapYear(int year) {
+		if (year % 4 != 0)
+			return false;
+		if (year % 100 != 0)
 			return true;
-		}
+		if (year % 400 != 0)
+			return false;
+		return true;
 	}
 }
