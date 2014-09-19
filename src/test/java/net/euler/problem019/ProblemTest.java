@@ -8,8 +8,6 @@ public class ProblemTest {
 
 	@Test
 	public void test() {
-		Problem problem = new Problem();
-		assertEquals(171, problem.countFirstSundays(1901, 2000));
+		assertEquals(171, Problem.countFirstSundays(1901, 2000));
 	}
-
 }
