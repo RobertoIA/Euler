@@ -14,15 +14,31 @@ package net.euler.problem021;
 public class Problem {
 
 	public static void main(String[] args) {
-		
+		System.out.println(getAmicableSum(10000));
+	}
+
+	static int getAmicableSum(int max) {
+		int[] sums = new int[max];
+		int sum = 0;
+		boolean insideLimits, amicable;
+		for (int i = 2; i < max; i++) {
+			if (sums[i] == 0) sums[i] = getSumOfProperDivisors(i);
+			insideLimits = sums[i] < max;
+			if (insideLimits) {
+				if (sums[sums[i]] == 0) sums[sums[i]] = getSumOfProperDivisors(sums[i]);
+				amicable = i == sums[sums[i]] && sums[i] == sums[sums[sums[i]]]
+						&& i != sums[i];
+				if (amicable) sum += i;
+			}
+		}
+		return sum;
 	}
 
 	static int getSumOfProperDivisors(int n) {
 		int sum = 0;
-		
-		for(int i = n / 2; i > 0; i--)
-			if( n % i == 0) sum += i;
-		
+		for (int i = n / 2; i > 0; i--)
+			if (n % i == 0)
+				sum += i;
 		return sum;
 	}
 }
