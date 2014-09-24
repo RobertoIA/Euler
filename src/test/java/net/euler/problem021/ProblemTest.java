@@ -11,4 +11,9 @@ public class ProblemTest {
 		assertEquals(284, Problem.getSumOfProperDivisors(220));
 		assertEquals(220, Problem.getSumOfProperDivisors(284));
 	}
+	
+	@Test
+	public void testAmicables() {
+		assertEquals(31626, Problem.getAmicableSum(10000));
+	}
 }
