@@ -29,9 +29,6 @@ public class Problem {
 	static List<Integer> abundantNumbers = null;
 
 	public static void main(String[] args) {
-		System.out.println(canBeWrittenAsSum(30)); // True
-		System.out.println(canBeWrittenAsSum(29)); // False
-		
 		long sum = 0;
 		for(int n = 1; n <= BOUND; n++)
 			if(!canBeWrittenAsSum(n)) sum += n;
