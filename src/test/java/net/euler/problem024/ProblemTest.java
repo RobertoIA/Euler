@@ -12,4 +12,9 @@ public class ProblemTest {
 		assertEquals(5040, Problem.factorial(7));
 	}
 
+	@Test
+	public void testGetNPermutation() {
+		assertArrayEquals(new int[]{1, 2, 0}, Problem.getNPermutation(4, new int[]{0, 1, 2}));
+//		assertArrayEquals(new int[]{}, Problem.getNPermutation(1_000_000, new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}));
+	}
 }
